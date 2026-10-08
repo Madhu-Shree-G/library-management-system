@@ -1,0 +1,20 @@
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="brand" href="{{ url_for('index') }}">
+      <img src="{{ url_for('static', filename='favicon.svg') }}" alt="Libra logo">
+      <span>Libra</span>
+    </a>
+    <div class="nav-links">
+      <a class="{{ 'active' if request.endpoint == 'index' else '' }}" href="{{ url_for('index') }}">Dashboard</a>
+      <a class="{{ 'active' if request.endpoint == 'books' else '' }}" href="{{ url_for('books') }}">Books</a>
+      <a class="{{ 'active' if request.endpoint == 'rules' else '' }}" href="{{ url_for('rules') }}">Rules</a>
+      {% if current_user %}
+        <a class="profile-pill" href="{{ url_for('profile') }}">{{ current_user['name'][0]|upper }}</a>
+        <form method="post" action="{{ url_for('logout') }}" class="inline-form"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><button class="link-button">Sign out</button></form>
+      {% else %}
+        <a href="{{ url_for('login') }}">Sign in</a>
+        <a class="signup-link" href="{{ url_for('signup') }}">Create account</a>
+      {% endif %}
+    </div>
+  </div>
+</nav>
